@@ -1,0 +1,39 @@
+{
+    "appKeys": {
+        "KEY_LAST_UPDATE": 2,
+        "KEY_PRESSURE": 6,
+        "KEY_RAIN_1H": 4,
+        "KEY_RAIN_24H": 5,
+        "KEY_RAIN_5M": 3,
+        "KEY_TEMPERATURE_IN": 1,
+        "KEY_TEMPERATURE_OUT": 0
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "vencax@gmail.com",
+    "longName": "MeteoZabo",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/cloudy.png",
+                "name": "WEATHER_CLOUDY",
+                "type": "png-trans"
+            },
+            {
+                "file": "images/sunny.png",
+                "name": "WEATHER_SUNNY",
+                "type": "png-trans"
+            }
+        ]
+    },
+    "sdkVersion": "2",
+    "shortName": "MeteoZabo",
+    "uuid": "54b7e465-72b9-48ee-a8d5-a6568e7aec01",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
