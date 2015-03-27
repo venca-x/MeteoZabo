@@ -17,6 +17,12 @@
     "resources": {
         "media": [
             {
+                "file": "images/meteo-icon.png",
+                "menuIcon": true,
+                "name": "METEO_ICON",
+                "type": "png"
+            },
+            {
                 "file": "images/cloudy.png",
                 "name": "WEATHER_CLOUDY",
                 "type": "png-trans"

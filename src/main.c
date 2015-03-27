@@ -11,6 +11,7 @@
 #define KEY_PRESSURE 6
   
 Window* g_window;
+TextLayer *g_text_layer_date;//vrstva pro datum
 TextLayer *g_text_layer_time;//vrstva pro cas
 TextLayer *g_text_layer_temperature;//teplota
 TextLayer *g_text_layer_last_update;//posledni aktualizace
@@ -20,6 +21,7 @@ TextLayer *g_text_layer_pressure;//tlak
 //GBitmap *future_bitmap;
 BitmapLayer *g_bitmap_layer_weather;//obrazek pocasi
 
+char date_text[32];
 char buffer[] = "00:00";
 
 void window_load(Window *window)
@@ -29,6 +31,15 @@ void window_load(Window *window)
   // Get the root layer
   Layer *window_layer = window_get_root_layer(window);  
   GRect bounds = layer_get_bounds(window_layer);//widnows size
+
+  //date
+  g_text_layer_date = text_layer_create(GRect(0, 0, 144, 20));
+  text_layer_set_background_color(g_text_layer_date, GColorClear);
+  text_layer_set_text_color(g_text_layer_date, GColorBlack);
+  text_layer_set_text_alignment(g_text_layer_date, GTextAlignmentCenter);
+  text_layer_set_font(g_text_layer_date, fonts_get_system_font(FONT_KEY_GOTHIC_18)); 
+  text_layer_set_text(g_text_layer_date, "??.??.????");
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(g_text_layer_date));   
   
   //hours
   g_text_layer_time = text_layer_create(GRect(0, 20, 144, 55));
@@ -87,6 +98,7 @@ void window_load(Window *window)
 void window_unload(Window *window)
 {
   //We will safely destroy the Window's elements here!
+  text_layer_destroy(g_text_layer_date);
   text_layer_destroy(g_text_layer_time);
   text_layer_destroy(g_text_layer_temperature);
   text_layer_destroy(g_text_layer_last_update); 
@@ -101,9 +113,13 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "TICK");  
 
+    //set date
+    strftime(date_text, sizeof(date_text), "%A, %e.%m %G", tick_time);
+    text_layer_set_text(g_text_layer_date, date_text);
+  
     //Here we will update the watchface display
     //Format the buffer string using tick_time as the time source
-    strftime(buffer, sizeof("00:00"), "%H:%M", tick_time);
+    strftime(buffer, sizeof(buffer), "%H:%M", tick_time);
       
     //Change the TextLayer text to show the new time!
     text_layer_set_text(g_text_layer_time, buffer);    
