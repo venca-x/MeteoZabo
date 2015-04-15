@@ -30,33 +30,42 @@ function getWeather() {
       var temperature_in = json.temp['in'];
       console.log("Temperature in: " + temperature_in);
       
+      //wind
+      var wind_gust = json.wind['gust'];
+      var wind_ave = json.wind['ave'];
+      
       //rain "rain":{"5m":0,"1h":0,"24h":0.3,"7d":2.4}
       var rain_5m = json.rain['5m'];
       var rain_1h = json.rain['1h'];
       var rain_24h = json.rain['24h'];
       
-      console.log("Rain 5m: " + rain_5m );
-      console.log("Rain 1h: " + rain_1h );
-      console.log("Rain 24h: " + rain_24h );
+      //console.log("Rain 5m: " + rain_5m );
+      //console.log("Rain 1h: " + rain_1h );
+      //console.log("Rain 24h: " + rain_24h );
       
-      // Last update
+      // Pressure
       var pressure = json.pressure;
-      console.log("Pressure: " + pressure);
+      //console.log("Pressure: " + pressure);
+      
+      // Lux
+      var lux = json.lux;
       
       // Last update
       var last_update = json.date;
-      console.log("Last update: " + last_update);
+      //console.log("Last update: " + last_update);
 
 
       // Assemble dictionary using our keys
       var dictionary = {
         "KEY_TEMPERATURE_OUT": temperature_out+"",
         "KEY_TEMPERATURE_IN": temperature_in+"",
+        "KEY_WIND": wind_gust+"",
         "KEY_LAST_UPDATE": last_update+"",
         "KEY_RAIN_5M": rain_5m+"",
         "KEY_RAIN_1H": rain_1h+"",
         "KEY_RAIN_24H": rain_24h+"",    
         "KEY_PRESSURE": pressure+"",
+        "KEY_LUX": lux+"",
       };      
 
       // Send to Pebble

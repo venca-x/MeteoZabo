@@ -9,6 +9,8 @@
 #define KEY_RAIN_1H 4
 #define KEY_RAIN_24H 5
 #define KEY_PRESSURE 6
+#define KEY_WIND 7
+#define KEY_LUX 8
   
 Window* g_window;
 TextLayer *g_text_layer_date;//vrstva pro datum
@@ -148,6 +150,8 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   static char temperature_out_buffer[32];
   static char weather_layer_buffer[32];
   
+  static char wind_layer_buffer[32];
+  
   static char last_update_layer_buffer[32];
   
   static char rain_5m_layer_buffer[32];
@@ -156,6 +160,11 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   static char rain_layer_buffer[32];
   
   static char pressure_layer_buffer[32];
+  static char lux_layer_buffer[32];
+  
+  //double rain5m = 1.2;
+  //double rain5m = atof( "1.23" );
+  //float rain5m = 2.3;
   
   // Read first item
   Tuple *t = dict_read_first(iterator);
@@ -170,11 +179,14 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     case KEY_TEMPERATURE_IN:
       snprintf(temperature_out_buffer, sizeof(temperature_out_buffer), "%s", t->value->cstring);
       break;
+    case KEY_WIND:
+      snprintf(wind_layer_buffer, sizeof(wind_layer_buffer), "%s m/s", t->value->cstring);      
+      break;      
     case KEY_LAST_UPDATE:
       snprintf(last_update_layer_buffer, sizeof(last_update_layer_buffer), "%s", t->value->cstring);
       break;
     case KEY_RAIN_5M:
-      snprintf(rain_5m_layer_buffer, sizeof(rain_5m_layer_buffer), "%s", t->value->cstring);      
+      snprintf(rain_5m_layer_buffer, sizeof(rain_5m_layer_buffer), "%s", t->value->cstring);
       break;      
     case KEY_RAIN_1H:
       snprintf(rain_1h_layer_buffer, sizeof(rain_1h_layer_buffer), "%s", t->value->cstring);      
@@ -184,6 +196,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       break;
     case KEY_PRESSURE:
       snprintf(pressure_layer_buffer, sizeof(pressure_layer_buffer), "%s hPa", t->value->cstring);      
+      break;
+    case KEY_LUX:
+      snprintf(lux_layer_buffer, sizeof(lux_layer_buffer), "%s", t->value->cstring);      
       break;
       
     default:
@@ -204,9 +219,11 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   text_layer_set_text(g_text_layer_rain, rain_layer_buffer);      
 
   //pressure
+  snprintf(pressure_layer_buffer, sizeof(pressure_layer_buffer), "%s / %s lx", pressure_layer_buffer, lux_layer_buffer);
   text_layer_set_text(g_text_layer_pressure, pressure_layer_buffer);  
   
   //last update  
+  snprintf(last_update_layer_buffer, sizeof(last_update_layer_buffer), "%s / %s", last_update_layer_buffer, wind_layer_buffer);
   text_layer_set_text(g_text_layer_last_update, last_update_layer_buffer);  
   
   //weather icon

@@ -1,12 +1,14 @@
 {
     "appKeys": {
         "KEY_LAST_UPDATE": 2,
+        "KEY_LUX": 8,
         "KEY_PRESSURE": 6,
         "KEY_RAIN_1H": 4,
         "KEY_RAIN_24H": 5,
         "KEY_RAIN_5M": 3,
         "KEY_TEMPERATURE_IN": 1,
-        "KEY_TEMPERATURE_OUT": 0
+        "KEY_TEMPERATURE_OUT": 0,
+        "KEY_WIND": 7
     },
     "capabilities": [
         ""
